@@ -22,6 +22,10 @@
   color: white;
 }
 
-.mainContent {
+.main-content {
   height: 100%;
+
+  & .container {
+    padding-top: 2rem;
+  }
 }

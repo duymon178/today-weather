@@ -1,7 +1,39 @@
-/*
- * Replace this with your own classes
- *
- * e.g.
- * .container {
- * }
-*/
+.form-control {
+  &__label {
+    margin-right: 0.8rem;
+  }
+
+  &__input {
+    padding: 0.5rem 1rem;
+    border: 1px solid #878787;
+    border-radius: 5px;
+  }
+}
+
+.search-form {
+  display: flex;
+
+  &__item {
+    margin-right: 1.5rem;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.form-actions {
+  display: flex;
+
+  &__button {
+    margin-right: 1rem;
+    cursor: pointer;
+    padding: 0 1rem;
+    border-radius: 5px;
+    border: 1px solid #dadada;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}

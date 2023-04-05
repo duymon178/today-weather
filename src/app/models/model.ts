@@ -31,7 +31,7 @@ export interface WeatherResult {
   country: string;
   lat: number;
   lon: number;
-  time: string;
+  time: number;
   temp: number;
   humidity: number;
   clouds: number;

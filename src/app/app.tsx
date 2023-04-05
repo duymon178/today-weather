@@ -1,5 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import styles from './app.module.scss';
+import SearchForm from './components/search-form/search-form';
 
 export function App() {
   return (
@@ -10,7 +11,9 @@ export function App() {
         </div>
       </nav>
       <main className={styles['main-content']}>
-        <div className={styles['container']}>Main</div>
+        <div className={styles['container']}>
+          <SearchForm />
+        </div>
       </main>
     </>
   );
