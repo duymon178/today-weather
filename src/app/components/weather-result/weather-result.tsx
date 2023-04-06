@@ -1,6 +1,7 @@
 import { LoadStatus, WeatherResult } from 'src/app/models/model';
 import styles from './weather-result.module.scss';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import { getTimeStrFromTimestamp } from 'src/app/utils/helpers';
 
 export interface WeatherResultProps {
   result: WeatherResult | null;
@@ -46,7 +47,7 @@ export function WeatherResultUI(props: WeatherResultProps) {
         </div>
         <div className={styles['weather__description__label']}>Time:</div>
         <div className={styles['weather__description__content']}>
-          {props.result.time}
+          {getTimeStrFromTimestamp(props.result.time)}
         </div>
       </div>
     </div>

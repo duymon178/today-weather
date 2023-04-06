@@ -1,7 +1,35 @@
-/*
- * Replace this with your own classes
- *
- * e.g.
- * .container {
- * }
-*/
+.history-item {
+  display: flex;
+  font-size: 1.2rem;
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+
+  &__left {
+    flex: 1;
+  }
+
+  &__right {
+    margin-left: 0;
+    display: flex;
+    align-items: center;
+  }
+}
+
+.history-time {
+  margin-right: 1rem;
+}
+
+.action-btn {
+  width: 2.3rem;
+  height: 2.3rem;
+  border-radius: 50%;
+  display: flex;
+  place-items: center center;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  &:last-child {
+    margin-left: 1rem;
+  }
+}

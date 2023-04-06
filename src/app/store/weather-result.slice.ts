@@ -7,7 +7,6 @@ import {
   WeatherSearchResult,
 } from '../models/model';
 import { fetchGeocodingData, fetchWeatherData } from '../utils/weatherAPI';
-import { getTimeStrFromTimestamp } from '../utils/helpers';
 
 export const WEATHER_RESULT_FEATURE_KEY = 'weather result';
 
@@ -34,15 +33,23 @@ export const fetchWeather = createAsyncThunk(
     const geocodingRes = await fetchGeocodingData(params.city, params.country);
     const geoData = (await geocodingRes.json()) as Geocoding[];
 
+    if (geoData.length === 0) {
+      return null;
+    }
+
     const weatherRes = await fetchWeatherData(geoData[0].lat, geoData[0].lon);
     const weatherData = (await weatherRes.json()) as WeatherSearchResult;
+
+    if (!weatherData) {
+      return null;
+    }
 
     return {
       city: geoData[0].name,
       country: geoData[0].country,
       lat: geoData[0].lat,
       lon: geoData[0].lon,
-      time: getTimeStrFromTimestamp(weatherData.current.dt),
+      time: weatherData.current.dt,
       temp: weatherData.current.temp,
       humidity: weatherData.current.humidity,
       clouds: weatherData.current.clouds,
@@ -64,9 +71,18 @@ export const weatherResultSlice = createSlice({
       })
       .addCase(
         fetchWeather.fulfilled,
-        (state: WeatherResultState, action: PayloadAction<WeatherResult>) => {
-          state.value = action.payload;
-          state.loading = 'loaded';
+        (
+          state: WeatherResultState,
+          action: PayloadAction<WeatherResult | null>
+        ) => {
+          if (action.payload) {
+            state.value = action.payload;
+            state.loading = 'loaded';
+          } else {
+            state.value = null;
+            state.loading = 'error';
+            state.error = 'Not found';
+          }
         }
       )
       .addCase(fetchWeather.rejected, (state: WeatherResultState, action) => {
