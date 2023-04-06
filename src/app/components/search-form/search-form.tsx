@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { LoadStatus } from 'src/app/models/model';
 import { WeatherParams } from 'src/app/store/weather-result.slice';
 import styles from './search-form.module.scss';
 
