@@ -1,12 +1,19 @@
+import { RootState } from './store';
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { Geocoding, WeatherResult, WeatherSearchResult } from '../models/model';
+import {
+  Geocoding,
+  LoadStatus,
+  WeatherResult,
+  WeatherSearchResult,
+} from '../models/model';
 import { fetchGeocodingData, fetchWeatherData } from '../utils/weatherAPI';
+import { getTimeStrFromTimestamp } from '../utils/helpers';
 
 export const WEATHER_RESULT_FEATURE_KEY = 'weather result';
 
 export interface WeatherResultState {
-  loading: 'not loaded' | 'loading' | 'loaded' | 'error';
-  error?: string;
+  loading: LoadStatus;
+  error: string;
   value: WeatherResult | null;
 }
 
@@ -35,7 +42,7 @@ export const fetchWeather = createAsyncThunk(
       country: geoData[0].country,
       lat: geoData[0].lat,
       lon: geoData[0].lon,
-      time: weatherData.current.dt,
+      time: getTimeStrFromTimestamp(weatherData.current.dt),
       temp: weatherData.current.temp,
       humidity: weatherData.current.humidity,
       clouds: weatherData.current.clouds,
@@ -64,7 +71,7 @@ export const weatherResultSlice = createSlice({
       )
       .addCase(fetchWeather.rejected, (state: WeatherResultState, action) => {
         state.loading = 'error';
-        state.error = action.error.message;
+        state.error = action.error.message || '';
       });
   },
 });
@@ -72,3 +79,12 @@ export const weatherResultSlice = createSlice({
 export const weatherActions = weatherResultSlice.actions;
 
 export const weatherReducer = weatherResultSlice.reducer;
+
+/* Selectors: */
+export const selectWeather = (state: RootState) => state.weatherResult.value;
+export const selectWeatherLoading = (state: RootState) => {
+  return {
+    loading: state.weatherResult.loading,
+    error: state.weatherResult.error,
+  };
+};

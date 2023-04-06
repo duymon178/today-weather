@@ -31,7 +31,7 @@ export interface WeatherResult {
   country: string;
   lat: number;
   lon: number;
-  time: number;
+  time: string;
   temp: number;
   humidity: number;
   clouds: number;
@@ -39,3 +39,5 @@ export interface WeatherResult {
   description: string;
   icon: string;
 }
+
+export type LoadStatus = 'not loaded' | 'loading' | 'loaded' | 'error';

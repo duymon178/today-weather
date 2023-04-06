@@ -1,15 +1,16 @@
 import { useState } from 'react';
-import { useAppDispatch } from 'src/app/store/hooks';
-import { fetchWeather } from 'src/app/store/weather-result.slice';
+import { LoadStatus } from 'src/app/models/model';
+import { WeatherParams } from 'src/app/store/weather-result.slice';
 import styles from './search-form.module.scss';
 
-/* eslint-disable-next-line */
-export interface SearchFormProps {}
+export interface SearchFormProps {
+  onSubmit: (arg: WeatherParams) => void;
+  loading: boolean;
+}
 
 export function SearchForm(props: SearchFormProps) {
   const [city, setCity] = useState('');
   const [country, setCountry] = useState('');
-  const dispatch = useAppDispatch();
 
   function handleFormClear() {
     setCity('');
@@ -18,8 +19,10 @@ export function SearchForm(props: SearchFormProps) {
 
   function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    dispatch(fetchWeather({ city, country }));
+    props.onSubmit({ city, country });
   }
+
+  const disabled = city.length === 0 || country.length === 0 || props.loading;
 
   return (
     <form className={styles['search-form']} onSubmit={handleFormSubmit}>
@@ -32,6 +35,7 @@ export function SearchForm(props: SearchFormProps) {
         <input
           id="city"
           type="text"
+          placeholder="Enter city name"
           className={styles['form-control__input']}
           value={city}
           onChange={(event) => setCity(event.target.value)}
@@ -47,6 +51,7 @@ export function SearchForm(props: SearchFormProps) {
         <input
           id="country"
           type="text"
+          placeholder="Enter country code"
           className={styles['form-control__input']}
           value={country}
           onChange={(event) => setCountry(event.target.value)}
@@ -56,7 +61,11 @@ export function SearchForm(props: SearchFormProps) {
       <div
         className={`${styles['search-form__item']} ${styles['form-actions']}`}
       >
-        <button type="submit" className={styles['form-actions__button']}>
+        <button
+          type="submit"
+          className={styles['form-actions__button']}
+          disabled={disabled}
+        >
           Search
         </button>
 

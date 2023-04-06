@@ -1,6 +1,7 @@
 const API_KEY = 'd2c32cae250aac0b012d28a407a55965';
-const GEOCODING_URL = 'http://api.openweathermap.org/geo/1.0/direct';
-const WEATHER_URL = 'https://api.openweathermap.org/data/3.0/onecall';
+const BASE_URL = 'http://api.openweathermap.org/';
+const GEOCODING_URL = `${BASE_URL}geo/1.0/direct`;
+const WEATHER_URL = `${BASE_URL}data/3.0/onecall`;
 
 /* Fetch geocoding by city and country */
 export function fetchGeocodingData(

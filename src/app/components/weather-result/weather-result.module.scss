@@ -1,7 +1,44 @@
-/*
- * Replace this with your own classes
- *
- * e.g.
- * .container {
- * }
-*/
+.weather-container {
+  height: 15rem;
+}
+
+.weather {
+  &__location {
+    color: #9d9d9d;
+    font-weight: bold;
+  }
+
+  &__group {
+    margin: 0.5rem 0;
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+
+  &__description {
+    display: grid;
+    grid-template-columns: 8rem 1fr;
+
+    &__label {
+      color: #9d9d9d;
+    }
+  }
+}
+
+.loading {
+  text-align: center;
+  padding-top: 3rem;
+}
+
+.not-loaded {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #9d9d9d;
+  padding-top: 3rem;
+}
+
+.error {
+  text-align: center;
+  font-size: 1.5rem;
+  color: brown;
+  padding-top: 3rem;
+}
